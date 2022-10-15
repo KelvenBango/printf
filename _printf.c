@@ -89,8 +89,8 @@ int _printf(const char *format, ...)
 		}
 		i++;
 	}
-	pf_buf_t_print(buffer);
-	va_end(list);
+	pf_buf_t_prit(buffer);
+	va_end(listn);
 	pf_buf_t_delete(buffer);
 	return (total_len);
 }
