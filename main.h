@@ -51,32 +51,7 @@ char *_ptrtohex(void *ptr);
 
 /* PRINTF */
 int _printf(const char *format, ...);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+int spec_eng(va_list list, spec_data_t *data, pf_buf_t *buffer);
+int is_in_format_specifiers(char c);
+int format_parsing(int *i, const char *format, pf_buf_t *buf, va_list list);
 #endif
