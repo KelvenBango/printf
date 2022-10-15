@@ -7,6 +7,15 @@
 #include <stdio.h>
 
 #define BUFSIZE 1024
+#define SPECIFIERS_SIZE 14
+#define LENGTH_SPECS_SIZE 8
+#define FLAGS_SPECS_SIZE 6
+
+#define ERROR -2
+#define INVALID -1
+#define EMPTY 0
+#define OK 1
+
 
 
 /**
