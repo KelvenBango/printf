@@ -24,6 +24,31 @@ typedef struct pf_buf
 } pf_buf_t;
 
 
+/* UTILS: utility function using which we can reuse the existing block of code without creating instance of the function */
+int _putchar(char c);
+void _puts(char *str);
+int _strlen(char *str);
+char *_strcat(char *s1, char *s2);
+char *_charcat(char *str, char c);
+char *_strdup(char *str);
+int _isalpha(int c);
+int _islower(int c);
+int _isdigit(int c);
+int _strnchr(char *s, char c, unsigned int n);
+void rev_string(char *str);
+char *_strcpy(char *dest, char *src);
+char *_strncpy(char *dest, char *src, int size);
+char *_strchr(char *s, char c);
+int _strcmp(char *s1, char *s2);
+int _atoi(char *s);
+char *_itoa(int i);
+char *_uitoa(unsigned int i);
+char *_chartohex(int ch);
+char *_dectohex(unsigned int uint, int upper);
+char *_dectooct(unsigned int uint);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char *_ptrtohex(void *ptr);
+
 /* PRINTF */
 int _printf(const char *format, ...);
 
