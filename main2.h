@@ -24,26 +24,13 @@
  * @buf: the buffer
  * @len: the size of the string to add to main buffer
  * @index: index of last char in main buffer
- *
+ */
 typedef struct pf_buf
 {
 	char *buf;
 	int len;
 	int index;
 } pf_buf_t;
-*/
-
-#include <stdarg.h>
-/**
- * struct print - structure for printing various types
- * @t: type to print
- * @f: function to print
- */
-typedef struct print
-{
-	char *t;
-	int (*f)(va_list);
-} print_t;
 
 /* UTILS: utility function using which we can reuse the existing block of code without creating instance of the function */
 int _putchar(char c);
@@ -76,19 +63,17 @@ int spec_eng(va_list list, spec_data_t *data, pf_buf_t *buffer);
 int is_in_format_specifiers(char c);
 int format_parsing(int *i, const char *format, pf_buf_t *buf, va_list list);
 
-int _putchar(char c);
-int _printf(const char *format, ...);
-int print_c(va_list c);
-int print_s(va_list s);
-int print_i(va_list i);
-int print_d(va_list d);
-int print_u(va_list u);
-int print_b(va_list b);
-int print_o(va_list o);
-int print_x(va_list x);
-int print_X(va_list X);
-int print_p(va_list p);
-int print_S(va_list S);
-int print_r(va_list r);
-int print_R(va_list R);
+pf_buf_t *store_char(va_list c, spec_data_t *data);
+pf_buf_t *store_string(va_list str, spec_data_t *data);
+pf_buf_t *store_int(va_list list, spec_data_t *data);
+pf_buf_t *store_rev(va_list str, spec_data_t *data);
+pf_buf_t *store_rot13(va_list str, spec_data_t *data);
+pf_buf_t *store_binary(va_list list, spec_data_t *data);
+pf_buf_t *store_strnop(va_list list, spec_data_t *data);
+pf_buf_t *store_uint(va_list list, spec_data_t *data);
+pf_buf_t *store_uoct(va_list list, spec_data_t *data);
+pf_buf_t *store_lowuhex(va_list list, spec_data_t *data);
+pf_buf_t *store_upuhex(va_list list, spec_data_t *data);
+pf_buf_t *store_ptr(va_list list, spec_data_t *data);
+
 #endif
