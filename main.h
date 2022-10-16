@@ -63,4 +63,17 @@ int spec_eng(va_list list, spec_data_t *data, pf_buf_t *buffer);
 int is_in_format_specifiers(char c);
 int format_parsing(int *i, const char *format, pf_buf_t *buf, va_list list);
 
+pf_buf_t *store_char(va_list c, spec_data_t *data);
+pf_buf_t *store_string(va_list str, spec_data_t *data);
+pf_buf_t *store_int(va_list list, spec_data_t *data);
+pf_buf_t *store_rev(va_list str, spec_data_t *data);
+pf_buf_t *store_rot13(va_list str, spec_data_t *data);
+pf_buf_t *store_binary(va_list list, spec_data_t *data);
+pf_buf_t *store_strnop(va_list list, spec_data_t *data);
+pf_buf_t *store_uint(va_list list, spec_data_t *data);
+pf_buf_t *store_uoct(va_list list, spec_data_t *data);
+pf_buf_t *store_lowuhex(va_list list, spec_data_t *data);
+pf_buf_t *store_upuhex(va_list list, spec_data_t *data);
+pf_buf_t *store_ptr(va_list list, spec_data_t *data);
+
 #endif
