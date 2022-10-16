@@ -1,96 +1,81 @@
 #include "main.h"
 
 /**
- * spec_eng - calls the correct print function and returns a string
+ * check_for_specifiers - checks if there is a valid format specifier
+ * @format: possible format specifier
  *
- * @list: the va_list object
- * @data: the parsed complete specifier
- * @buffer: the main buffer
- *
- * Retrun: a string
+ * Return: pointer to valid function or NULL
  */
-int spec_eng(va_list, spec_data_t *data, pf_buf_t *buffer)
+static int (*check_for_specifiers(const char *format))(va_list)
 {
-	pf_buf_t *tmp;
-	int len = 0, i, j = 0;
-	specs_t specs[] = {
-		{'c', store_char},
-		{'s', store_string},
-		{'d', store_int},
-		{'i', store_int},
-		{'u', store_uint},
-		{'o', store_uoct},
-		{'x', store_lowuhex},
-		{'X', store_upuhex},
-		{'r', store_rev},
-		{'R', store_rot13},
-		{'b', store_binary},
-		{'S', store_strnop},
-		{'p', store_ptr},
-		{0, NULL}
+	unsigned int i;
+	print_t p[] = {
+		{"c", print_c},
+		{"s", print_s},
+		{"i", print_i},
+		{"d", print_d},
+		{"u", print_u},
+		{"b", print_b},
+		{"o", print_o},
+		{"x", print_x},
+		{"X", print_X},
+		{"p", print_p},
+		{"S", print_S},
+		{"r", print_r},
+		{"R", print_R},
+		{NULL, NULL}
 	};
 
-	for (i = 0; specs[i].spec; i++)
+	for (i = 0; p[i].t != NULL; i++)
 	{
-		if (data->fmt_spec == specs[i].spec)
+		if (*(p[i].t) == *format)
 		{
-			tmp = specs[i]. func(list, data);
-			if (tmp)
-			{
-				while (j < tmp->len)
-					pf_buf_t_add_char(buffer, tmp->buf[j++]);
-				len = tmp->len;
-				pf_buf_t_delete(tmp);
-			}
+			break;
 		}
 	}
-	return (len);
+	return (p[i].f);
 }
-	
+
 /**
- * _printf - entry point for our main function
+ * _printf - prints anything
+ * @format: list of argument types passed to the function
  *
- * @format: the format string
- *
- * Return: the number of characters printed (excluding the NULL byte)
+ * Return: number of characters printed
  */
 int _printf(const char *format, ...)
 {
-	va_list list;
-	int i = 0, len = 0;
-	pf_buf_t *buffer;
-	int total_len = 0, tmp_len = 0;
+	unsigned int i = 0, count = 0;
+	va_list valist;
+	int (*f)(va_list);
 
-	buffer = pf_buf_t_new(BUFSIZE);
-	if (!buffer)
-		return (0);
-
-	va_start(list, format);
-
-	if (!format)
+	if (format == NULL)
 		return (-1);
-
-	len = _strlen((char *)format);
-	while (format[i] && i < len)
+	va_start(valist, format);
+	while (format[i])
 	{
-		while (format[i] && format[i] != '%')
+		for (; format[i] != '%' && format[i]; i++)
 		{
-			pf_buf_t_add_char(buffer, format[i++]);
-			total_len++;
+			_putchar(format[i]);
+			count++;
 		}
-
-		if (format[i] == '%' && len > 1)
+		if (!format[i])
+			return (count);
+		f = check_for_specifiers(&format[i + 1]);
+		if (f != NULL)
 		{
-			tmp_len = format_parsing(&i, format, buffer, list);
-			if (tmp_len == -1)
-				return (-1);
-			total_len += tmp_len;
-			tmp_len = 0;
+			count += f(valist);
+			i += 2;
+			continue;
 		}
-		i++;
+		if (!format[i + 1])
+			return (-1);
+		_putchar(format[i]);
+		count++;
+		if (format[i + 1] == '%')
+			i += 2;
+		else
+			i++;
 	}
-	pf_buf_t_prit(buffer);
-	va_end(listn);
-	pf_buf_t_delete(buffer);
-	return (total_len);
+	va_end(valist);
+	return (count);
 }
