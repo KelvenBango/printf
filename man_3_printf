@@ -1,0 +1,4 @@
+.TH man 3 "17 october 2022" "0.1" "_printf man page"
+.SH NAME
+_printf
+- formatted output conversion (clone of libc's printf for ALX School)
