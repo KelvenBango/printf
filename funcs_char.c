@@ -1,6 +1,5 @@
 #include "main.h"
 
-#include "holberton.h"
 
 /**
  * store_char - returns a temp buffer containing the string
