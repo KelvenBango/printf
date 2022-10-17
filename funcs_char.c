@@ -1,5 +1,6 @@
 #include "main.h"
 
+#include "holberton.h"
 
 /**
  * store_char - returns a temp buffer containing the string
@@ -191,3 +192,4 @@ pf_buf_t *store_strnop(va_list list, spec_data_t *data)
 
 	return (tmp);
 }
+
