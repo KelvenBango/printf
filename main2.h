@@ -16,8 +16,6 @@
 #define EMPTY 0
 #define OK 1
 
-
-
 /**
  * struct pf_buf - _printf buffer
  *
@@ -31,6 +29,41 @@ typedef struct pf_buf
 	int len;
 	int index;
 } pf_buf_t;
+
+/**
+ * struct spec_data - specifiers data
+ *
+ * @spec_flags: - +   0 ' #
+ * @spec_width: minimum number of characters to output
+ * @spec_prec: maximum limit on the output, depending on the type
+ * @spec_length: hh h l ll L z j t
+ * @fmt_spec: % d,i u f,F e,E g,G x,X o s,S c p a,A n b r,R
+ * @fmt_len: length of the format specifier
+ * @status: return value of extract functions
+ */
+
+typedef struct spec_data
+{
+	char fmt_spec;
+	char *spec_length;
+	int spec_prec;
+	int spec_width;
+	char *spec_flags;
+	int fmt_len;
+	int status;
+} spec_data_t;
+/**
+ * struct specs - specifiers structure containing associated funcions
+ *
+ * @spec: the specifier
+ * @func: the print function associated to the specifier
+ */
+
+typedef struct specs
+{
+	char spec;
+	pf_buf_t *(*func)(va_list, spec_data_t*);
+} specs_t;
 
 /* UTILS: utility function using which we can reuse the existing block of code without creating instance of the function */
 int _putchar(char c);
@@ -76,4 +109,23 @@ pf_buf_t *store_lowuhex(va_list list, spec_data_t *data);
 pf_buf_t *store_upuhex(va_list list, spec_data_t *data);
 pf_buf_t *store_ptr(va_list list, spec_data_t *data);
 
+/* PRINT_SPEC_DATA */
+int spec_data_t_parse(spec_data_t *data, const char *format);
+spec_data_t *spec_data_t_new(void);
+void *spec_data_t_delete(spec_data_t *data);
+int spec_data_t_leave(char *str, int status);
+
+/* PF_BUF */
+pf_buf_t *pf_buf_t_new(size_t size);
+void *pf_buf_t_delete(pf_buf_t *buffer);
+void pf_buf_t_add_char(pf_buf_t *buffer, char to_add);
+void pf_buf_t_flush(pf_buf_t *buffer);
+void pf_buf_t_print(pf_buf_t *buffer);
+
+/* SPECIFIERS */
+char *extract_format(const char *format, int size);
+char *extract_length(char *str, spec_data_t *data);
+int extract_prec(char *str, spec_data_t *data);
+int extract_width(char *str, spec_data_t *data);
+char *extract_flags(char *str, spec_data_t *data);
 #endif
