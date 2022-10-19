@@ -17,20 +17,6 @@
 #define OK 1
 
 /**
- * struct pf_buf - _printf buffer
- *
- * @buf: the buffer
- * @len: the size of the string to add to main buffer
- * @index: index of last char in main buffer
- */
-typedef struct pf_buf
-{
-	char *buf;
-	int len;
-	int index;
-} pf_buf_t;
-
-/**
  * struct spec_data - specifiers data
  *
  * @spec_flags: - +   0 ' #
@@ -52,6 +38,22 @@ typedef struct spec_data
 	int fmt_len;
 	int status;
 } spec_data_t;
+
+/**
+ * struct pf_buf - _printf buffer
+ *
+ * @buf: the buffer
+ * @len: the size of the string to add to main buffer
+ * @index: index of last char in main buffer
+ */
+
+typedef struct pf_buf
+{
+	char *buf;
+	int len;
+	int index;
+} pf_buf_t;
+
 /**
  * struct specs - specifiers structure containing associated funcions
  *
@@ -65,7 +67,8 @@ typedef struct specs
 	pf_buf_t *(*func)(va_list, spec_data_t*);
 } specs_t;
 
-/* UTILS: utility function using which we can reuse the existing block of code without creating instance of the function */
+
+/* STRING */
 int _putchar(char c);
 void _puts(char *str);
 int _strlen(char *str);
@@ -109,13 +112,13 @@ pf_buf_t *store_lowuhex(va_list list, spec_data_t *data);
 pf_buf_t *store_upuhex(va_list list, spec_data_t *data);
 pf_buf_t *store_ptr(va_list list, spec_data_t *data);
 
-/* PRINT_SPEC_DATA */
+/*PRINT_SPEC_DATA_T */
 int spec_data_t_parse(spec_data_t *data, const char *format);
 spec_data_t *spec_data_t_new(void);
 void *spec_data_t_delete(spec_data_t *data);
 int spec_data_t_leave(char *str, int status);
 
-/* PF_BUF */
+/* PF_BUF_T */
 pf_buf_t *pf_buf_t_new(size_t size);
 void *pf_buf_t_delete(pf_buf_t *buffer);
 void pf_buf_t_add_char(pf_buf_t *buffer, char to_add);
